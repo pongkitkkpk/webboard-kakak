@@ -20,7 +20,7 @@ if (!isset($_SESSION["id"])) {
   <body>
     <div class="container fluid">
       <h1>
-        <center>Webboard's Nawapat</center>
+        <center>Webboard's PK</center>
       </h1>
 
       <?php include "nav.php" ?>
@@ -72,39 +72,40 @@ if (!isset($_SESSION["id"])) {
       <?php include "nav.php" ?>
       <br>
       <div>
-        <label>หมวดหมู่</label>
-        <span class="dropdown">
-          <button class="btn btn-light dropdown-toggle btn-bs" type="data" id="button2" data-bs-toggle="dropdown" aria-expanded="false">
-            --ทั้งหมด--
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="button2">
-            <li><a href="#" class="dropdown-item">ทั้งหมด</a></li>
-            <li><a href="#" class="dropdown-item">เรื่องเรียน</a></li>
-            <li><a href="#" class="dropdown-item">ทั่วไป</a></li>
-          </ul>
-        </span>
+      <br>
+      <div class="d-flex justify-content-between">
+        <div >
+          <label>หมวดหมู่</label>
+          <span class="dropdown">
+            <button class="btn btn-light dropdown-toggle btn-bs" type="data" id="button2" data-bs-toggle="dropdown" aria-expanded="false">
+              --ทั้งหมด--
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="button2">
+              <li><a href="#" class="dropdown-item">ทั้งหมด</a></li>
+              <li><a href="#" class="dropdown-item">เรื่องเรียน</a></li>
+              <li><a href="#" class="dropdown-item">ทั่วไป</a></li>
+            </ul>
+          </span>
+        </div>
+        <div>
+          <a href="newpost.php" class="btn btn-success btn-sm"> <i class="bi bi-window-plus p-2"></i> สร้างกระทู้ใหม่</a>
+        </div>
       </div>
-      <a href="newpost.php"> สร้างกระทู้ใหม่</a>
-      <br />
-      <ul>
-        <!-- <li><a href="post.php?id=1" >กระทู้ที่ 1</a></li>
-        <li><a href="post.php?id=2" >กระทู้ที่ 2</a></li>
-        <li><a href="post.php?id=3" >กระทู้ที่ 3</a></li>
-        <li><a href="post.php?id=4" >กระทู้ที่ 4</a></li>
-        <li><a href="post.php?id=5" >กระทู้ที่ 5</a></li> -->
 
+      <br>
+      <table class="table table-striped">
         <?php
-
         for ($i = 1; $i <= 10; $i++) {
-          echo "<li><a href=post.php?id=" . $i . ">กระทู้ที่" . $i . "</a>";
-          if ($_SESSION["role"] == 'a') {
-            echo "&emsp;<a href=delete.php?id=$i>ลบ</a> ";
+          echo "<tr><td><a href=post.php?id=" . $i . " style=text-decoration:none>กระทู้ที่" . $i . "</a></td>";
+          if($_SESSION["role"] == "a"){
+            echo "<td> <a href =delete.php?id=$i class='btn btn-danger btn-sm'> <i class='bi bi-trash-fill p-2'></i>  ลบ</a>    </td>";
           }
-          echo "</li>";
+          echo "</tr>";
         }
-
         ?>
-      </ul>
+
+
+      </table>
     </div>
   </body>
 

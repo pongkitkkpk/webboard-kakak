@@ -1,51 +1,69 @@
-<?php 
+<?php
 session_start();
-  if(isset($_SESSION["id"])){
-    header("location:index.php");
-    die();
-  }
+if (isset($_SESSION["id"])) {
+  header("location:index.php");
+  die();
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-  </head>
-  <body>
-    <h1><center>Webboard's Kakkak</center></h1>
-    <hr />
-    <form action="verify.php" method="post">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  <title>Login</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>
+      <center>Webboard's Kakkak</center>
+    </h1>
+    <?php include "nav.php" ?>
+    <br>
+
+
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <?php
+        if (isset($_SESSION['error'])) {
+          echo "<div class='alert alert-danger'> ชื่อบัญชีหรือรหัสผ่านไม่ถูกต้อง</div>";
+          unset($_SESSION['error']);
+        }
+        ?>
+        <div class="card text-dark bg-light">
+          <div class="card-header"> เข้าสู่ระบบ</div>
+          <div class="card-body">
+            <form action="verify.php" method="post">
+              <div class="form-group ">
+                <label class="form-label"> login</label>
+                <input type="text" name="login" class="form-control">
+              </div>
+              <div class="form-group mt-2 ">
+                <label class="form-label"> password</label>
+                <input type="password" name="pwd" class="form-control">
+              </div>
+              <center><button type="submit" class="btn btn-secondary btn-sm mt-3">login</button></center>
+            </form>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
     <center>
-      <table style="border: 2px solid black; width: 40%">
-        <tr>
-          <td style="background-color: #6cd2fe" colspan="2">เข้าสู่ระบบ</td>
-        </tr>
-        
-          <tr>
-            <td>Login</td>
-            <td>
-              <input type="text" name="login" size="50" />
-            </td>
-          </tr>
-          <tr>
-            <td>Password</td>
-            <td>
-              <input type="password" name="pwd" size="50" />
-            </td>
-          </tr>
-        <tr>
-          <td colspan="2" align="center">
-            <input type="submit" value="Login" />
-          </td>
-        </tr>
-      </table>
-    </form>
-      <p>
+      <p class="mt-3">
         ถ้ายังไม่ได้เป็นสมาชิก <a href="register.php"> กรุณาสมัครสมาชิก </a>
       </p>
     </center>
-  </body>
+
+  </div>
+</body>
+
 </html>
