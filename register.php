@@ -31,6 +31,16 @@ if (isset($_SESSION["id"])) {
     <div class="row">
       <div class="col-md-3"></div>
       <div class="col-md-6">
+        <?php
+        if (isset($_SESSION['add_login'])) {
+          if ($_SESSION['add_login'] == "error") {
+            echo "<div class='alert alert-danger'>ชื่อบัญชีซ้ำหรือตัวฐานข้อมูลมีปัญหา</div>";
+          } else {
+            echo "<div class='alert alert-success'> เปิดบัญชีเรียบร้อยแล้ว!!</div>";
+          }
+          unset($_SESSION['add_login']);
+        }
+        ?>
         <div class="card text-dark bg-light border-primary">
           <div class="card-header bg-primary text-white"> กรอกข้อมูล</div>
           <div class="card-body">
@@ -98,11 +108,11 @@ if (isset($_SESSION["id"])) {
 
     <br>
     <center>
-      <button class="btn btn-sm m-5 " style="background-color: #d3d3d3;" >
-      <i class="bi bi-house-door-fill"></i> กลับไปที่หน้าหลัก
+      <button class="btn btn-sm m-5 " style="background-color: #d3d3d3;">
+        <i class="bi bi-house-door-fill"></i> กลับไปที่หน้าหลัก
         <a href="index.php ">
         </a>
-        
+
       </button>
     </center>
   </div>

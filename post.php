@@ -15,32 +15,98 @@
         <!-- <p> ต้องการดูกระทู้หมายเลข <?php echo $_GET["id"] ?> </p> -->
         <?php
         $number = $_GET["id"];
-        echo "<p> ต้องการดูกระทู้หมายเลข ".$number."";
+        echo "<p> ต้องการดูกระทู้หมายเลข " . $number . "";
         if ($number % 2 == 0) {
             echo "<p>เป็นกระทู้หมายเลขคู่</p>";
         } else {
             echo "<p> เป็นกระทู้หมายเลขคี่</p>";
         }
         ?>
-        <br>
-        <table style="border: 2px solid black; width: 40%">
-            <tr>
-                <td style="background-color: #6cd2fe">แสดงความคิดดเห็น</td>
-            </tr>
-            <tr>
-                <td>
-                    <textarea name="" id="" cols="100" rows="10"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <input type="submit" value="ส่งข้อความ" />
-                </td>
-            </tr>
-        </table>
-        <a href="index.php">กลับไปหน้าหลัก</a>
+        <?php
+        $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
+        $sql = "SELECT c.* , u.name FROM comment c , user u WHERE c.user_id = u.id AND c.post_id = $id;";
+        $data = $conn->query("SELECT p.id,p.title,p.content,p.post_date ,c.name,u.name FROM post p , user u , category c WHERE p.id = $id AND p.user_ID = u.id;");
+        ?>
+        <div class="card text-dark bg-white border-primary mb-3">
+            <?php $row = $data->fetch(); ?>
+            <div class="card-header bg-primary text-white"><?= $row['1']; ?></div>
+            <div class="card-body pb-1">
 
-    </center>
+                <div class="container row mb-3 justify-content-between">
+
+                    <?= $row['2']; ?> <br><br>
+                    <?= $row['5'] . " - " . $row['3']; ?>
+
+                </div>
+            </div>
+        </div>
+        <?php
+        $result = $conn->query($sql);
+        $i = 0;
+        foreach ($conn->query($sql) as $row) {
+            $i++;
+        ?>
+            <div class="card text-dark bg-white border-info mb-3">
+                <div class="card-header bg-info text-white"><?= " ความคิดเห็นที่ " . $i; ?></div>
+                <div class="card-body pb-1">
+
+                    <div class="container row mb-3 justify-content-between">
+
+                        <?= $row['1']; ?> <br><br>
+                        <?= $row['5'] . " - " . $row['2']; ?>
+
+                    </div>
+                </div>
+            </div>
+        <?php
+
+
+        }
+        $conn = null;
+        ?>
+        <?php
+        if (isset($_SESSION["id"])) {
+
+        ?>
+            <div class="card text-dark bg-white border-success">
+                <div class="card-header bg-success text-white">แสดงความคิดเห็น</div>
+                <div class="card-body">
+                    <form action="post_save.php" method="post">
+                        <input type="hidden" name="post_id" value="<?= $id; ?>">
+                        <div class="row mb-3 justify-content-center">
+                            <div class="col-lg-10">
+                                <textarea name="comment" class="form-control" rows="8"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <center>
+                                    <button type="submit" class="btn btn-success btn-sm text-white">
+                                        <i class="bi bi-box-arrow-up-right me-1"></i>
+                                        ส่งข้อความ
+                                    </button>
+                                </center>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <?php
+        }
+
+        ?>
+
+        </section>
+        </div>
+
+
+        <!-- <table style="border: 2px solid black; width:40% ;"> 
+    <tr><th style="background-color: #6CD2FE; text-align: left;" colspan="2">แสดงความคิดเห็น</th></tr>
+    <tr><td><div style="text-align:center"><textarea type="text" name="comment" rows="5%" cols="65%" placeholder="แสดงความคิดเห็นได้ที่นี่......" autofocus></textarea></div></td></tr>
+    <tr><td style="text-align:center"><input type="submit" value="ส่งข้อความ"></td></tr>    
+    </table> -->
+        <!--<h3><a href="index.php">กลับไปหน้าหลัก</a></h3></center>
+-->
 </body>
 
 </html>
